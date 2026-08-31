@@ -1,0 +1,11 @@
+model Subject {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  teachers  Teacher[]
+  lessons   Lesson[]
+
+  @@map("subjects")
+}

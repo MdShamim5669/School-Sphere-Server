@@ -1,0 +1,21 @@
+model Lesson {
+  id        String    @id @default(uuid())
+  name      String
+  day       DayOfWeek
+  startTime DateTime
+  endTime   DateTime
+  subjectId String
+  classId   String
+  teacherId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  subject     Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  class       Class        @relation(fields: [classId], references: [id], onDelete: Cascade)
+  teacher     Teacher      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  exams       Exam[]
+  assignments Assignment[]
+  attendances Attendance[]
+
+  @@map("lessons")
+}

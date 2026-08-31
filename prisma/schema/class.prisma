@@ -1,0 +1,18 @@
+model Class {
+  id           String    @id @default(uuid())
+  name         String    @unique
+  capacity     Int
+  supervisorId String?
+  gradeId      String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  grade         Grade          @relation(fields: [gradeId], references: [id], onDelete: Restrict)
+  supervisor    Teacher?       @relation(fields: [supervisorId], references: [id], onDelete: SetNull)
+  students      Student[]
+  lessons       Lesson[]
+  events        Event[]
+  announcements Announcement[]
+
+  @@map("classes")
+}

@@ -1,0 +1,22 @@
+model Teacher {
+  id        String     @id @default(uuid())
+  username  String     @unique
+  password  String
+  name      String
+  surname   String
+  email     String?    @unique
+  phone     String?    @unique
+  address   String
+  img       String?
+  bloodType BloodType
+  sex       UserSex
+  birthday  DateTime
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  subjects          Subject[]
+  lessons           Lesson[]
+  supervisedClasses Class[]
+
+  @@map("teachers")
+}

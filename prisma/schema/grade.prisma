@@ -1,0 +1,11 @@
+model Grade {
+  id        String    @id @default(uuid())
+  level     Int       @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  classes   Class[]
+  students  Student[]
+
+  @@map("grades")
+}
