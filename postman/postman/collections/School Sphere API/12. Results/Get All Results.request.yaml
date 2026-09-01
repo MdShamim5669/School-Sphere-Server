@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/results?page=1&limit=10"
+method: GET
+queryParams:
+  - key: page
+    value: "1"
+  - key: limit
+    value: "10"
+  - key: studentId
+    value: "{{studentId}}"
+    disabled: true
+  - key: examId
+    value: "{{examId}}"
+    disabled: true
+  - key: assignmentId
+    value: "{{assignmentId}}"
+    disabled: true
+order: 3000

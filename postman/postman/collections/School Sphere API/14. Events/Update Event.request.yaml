@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/events/{{eventId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Annual Science Exhibition 2026"
+    }
+order: 3000

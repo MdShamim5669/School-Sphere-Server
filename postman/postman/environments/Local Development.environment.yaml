@@ -1,0 +1,32 @@
+name: Local Development
+values:
+  - key: baseUrl
+    value: ''
+  - key: accessToken
+    value: ''
+  - key: gradeId
+    value: ''
+  - key: teacherId
+    value: ''
+  - key: subjectId
+    value: ''
+  - key: classId
+    value: ''
+  - key: parentId
+    value: ''
+  - key: studentId
+    value: ''
+  - key: lessonId
+    value: ''
+  - key: examId
+    value: ''
+  - key: assignmentId
+    value: ''
+  - key: resultId
+    value: ''
+  - key: attendanceId
+    value: ''
+  - key: eventId
+    value: ''
+  - key: announcementId
+    value: ''

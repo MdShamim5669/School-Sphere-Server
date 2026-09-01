@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/results"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "score": 88,
+      "studentId": "c5c2f417-38b2-4a8e-a227-d5d528e971ec",
+      "assignmentId": "d0cbfea7-b8cc-4b8a-a263-c85139b0ec3c"
+    }
+order: 2000

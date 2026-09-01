@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/assignments"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Homework 1: Linear Equations",
+      "startDate": "2026-09-05T08:00:00.000Z",
+      "dueDate": "2026-09-12T23:59:59.000Z",
+      "lessonId": "da7d15ed-4262-4943-b171-98712441b762"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 200 || pm.response.code === 201) {
+          var res = pm.response.json();
+          if (res.data && res.data.id) {
+              pm.environment.set('assignmentId', res.data.id);
+          }
+      }
+    language: text/javascript
+order: 1000

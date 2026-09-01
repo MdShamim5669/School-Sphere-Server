@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/assignments/{{assignmentId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Homework 1: Linear Equations (Updated)",
+      "dueDate": "2026-09-15T23:59:59.000Z"
+    }
+order: 3000

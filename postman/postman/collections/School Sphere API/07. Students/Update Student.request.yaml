@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/students/{{studentId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "address": "999 Updated Address Ave"
+    }
+order: 4000

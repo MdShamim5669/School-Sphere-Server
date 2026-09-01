@@ -1,12 +1,14 @@
 import { Server } from "http";
 import app from "./app.js";
 import config from "./config/index.js";
+import { seedSuperAdmin } from "./DB/index.js";
 import prisma from "./lib/prisma.js";
 
 let server: Server;
 
 async function bootstrap() {
   try {
+    await seedSuperAdmin();
     server = app.listen(config.port, () => {
       console.log(`🚀 School Sphere Server is running on port ${config.port}`);
     });

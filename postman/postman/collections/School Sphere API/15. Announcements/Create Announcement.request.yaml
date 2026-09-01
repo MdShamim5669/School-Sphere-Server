@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/announcements"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "School Holiday Notice",
+      "description": "The school will remain closed on Monday.",
+      "date": "2026-09-07T00:00:00.000Z",
+      "classId": null
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 200 || pm.response.code === 201) {
+          var res = pm.response.json();
+          if (res.data && res.data.id) {
+              pm.environment.set('announcementId', res.data.id);
+          }
+      }
+    language: text/javascript
+order: 1000

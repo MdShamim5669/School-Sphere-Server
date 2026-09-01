@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/lessons/{{lessonId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Algebra 101 - Extended",
+      "startTime": "2026-09-01T09:30:00.000Z",
+      "endTime": "2026-09-01T10:30:00.000Z"
+    }
+order: 4000

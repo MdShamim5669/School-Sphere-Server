@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/exams/{{examId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Midterm Exam - Rescheduled",
+      "startTime": "2026-10-16T09:00:00.000Z",
+      "endTime": "2026-10-16T11:00:00.000Z"
+    }
+order: 3000

@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/parents/{{parentId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "phone": "+1999888777",
+      "address": "888 New Avenue"
+    }
+order: 4000

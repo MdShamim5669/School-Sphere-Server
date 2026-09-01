@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/subjects/{{subjectId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Advanced Mathematics"
+    }
+order: 3000

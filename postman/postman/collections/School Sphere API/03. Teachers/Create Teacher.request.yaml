@@ -1,0 +1,32 @@
+$kind: http-request
+url: "{{baseUrl}}/teachers"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "username": "teacher_john",
+      "name": "John",
+      "surname": "Doe",
+      "email": "john.doe@school.edu",
+      "password": "Password123!",
+      "phone": "+1234567890",
+      "address": "123 Academic Way",
+      "bloodType": "O_POSITIVE",
+      "sex": "MALE",
+      "birthday": "1985-05-15T00:00:00.000Z",
+      "subjectIds": []
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 200 || pm.response.code === 201) {
+          var res = pm.response.json();
+          if (res.data && res.data.id) {
+              pm.environment.set('teacherId', res.data.id);
+          }
+      }
+    language: text/javascript
+order: 1000

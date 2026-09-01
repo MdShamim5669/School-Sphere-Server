@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/attendances?page=1&limit=10"
+method: GET
+queryParams:
+  - key: page
+    value: "1"
+  - key: limit
+    value: "10"
+  - key: studentId
+    value: "{{studentId}}"
+    disabled: true
+  - key: lessonId
+    value: "{{lessonId}}"
+    disabled: true
+order: 2000

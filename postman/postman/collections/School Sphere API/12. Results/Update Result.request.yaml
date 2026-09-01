@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/results/{{resultId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "score": 98
+    }
+order: 4000

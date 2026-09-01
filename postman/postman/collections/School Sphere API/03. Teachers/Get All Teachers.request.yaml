@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/teachers?page=1&limit=10&sortBy=createdAt&sortOrder=desc"
+method: GET
+queryParams:
+  - key: page
+    value: "1"
+  - key: limit
+    value: "10"
+  - key: sortBy
+    value: createdAt
+  - key: sortOrder
+    value: desc
+  - key: searchTerm
+    value: ""
+    disabled: true
+order: 2000

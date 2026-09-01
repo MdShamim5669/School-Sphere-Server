@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/students?page=1&limit=10"
+method: GET
+queryParams:
+  - key: page
+    value: "1"
+  - key: limit
+    value: "10"
+  - key: classId
+    value: "{{classId}}"
+    disabled: true
+  - key: gradeId
+    value: "{{gradeId}}"
+    disabled: true
+  - key: searchTerm
+    value: ""
+    disabled: true
+order: 2000

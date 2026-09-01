@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/teachers/{{teacherId}}/image"
+method: DELETE
+order: 6000

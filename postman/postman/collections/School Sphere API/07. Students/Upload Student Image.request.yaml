@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/students/{{studentId}}/image"
+method: POST
+body:
+  type: formdata
+  content:
+    - type: file
+      key: image
+      src: []
+order: 5000

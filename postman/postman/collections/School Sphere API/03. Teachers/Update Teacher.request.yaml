@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/teachers/{{teacherId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Jonathan",
+      "phone": "+1987654321",
+      "address": "789 Updated Blvd"
+    }
+order: 4000

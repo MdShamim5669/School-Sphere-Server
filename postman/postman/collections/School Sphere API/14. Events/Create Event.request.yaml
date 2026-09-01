@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/events"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |
+    {
+      "title": "Annual Science Fair",
+      "description": "Science exhibition for Grade 10 students",
+      "startTime": "2026-09-20T09:00:00.000Z",
+      "endTime": "2026-09-20T17:00:00.000Z",
+      "classId": "5d70be5d-64a9-48a7-a936-b8679a157d7c"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 200 || pm.response.code === 201) {
+          var res = pm.response.json();
+          if (res.data && res.data.id) {
+              pm.environment.set('eventId', res.data.id);
+          }
+      }
+    language: text/javascript
+order: 1000

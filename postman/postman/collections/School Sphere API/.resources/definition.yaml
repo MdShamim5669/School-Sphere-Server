@@ -1,0 +1,8 @@
+$kind: collection
+description: Complete Postman collection for School Sphere RESTful Backend Platform.
+auth:
+  - id: 705d34de-6db3-4979-985c-d3c68c028be7
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{accessToken}}"

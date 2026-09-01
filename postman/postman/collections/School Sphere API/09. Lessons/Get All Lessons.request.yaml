@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/lessons?page=1&limit=10"
+method: GET
+queryParams:
+  - key: page
+    value: "1"
+    disabled: false
+    description: ""
+  - key: limit
+    value: "10"
+    disabled: false
+    description: ""
+  - key: classId
+    value: "{{classId}}"
+    disabled: true
+  - key: teacherId
+    value: "{{teacherId}}"
+    disabled: true
+  - key: day
+    value: MONDAY
+    disabled: true
+order: 2000

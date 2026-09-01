@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/results"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "score": 95,
+      "studentId": "c5c2f417-38b2-4a8e-a227-d5d528e971ec",
+      "examId": "dfa84260-7a39-4532-b1ff-bb4375df1cd8"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 200 || pm.response.code === 201) {
+          var res = pm.response.json();
+          if (res.data && res.data.id) {
+              pm.environment.set('resultId', res.data.id);
+          }
+      }
+    language: text/javascript
+order: 1000

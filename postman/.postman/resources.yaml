@@ -1,0 +1,15 @@
+# Use this workspace to collaborate
+workspace:
+  id: 5e20196c-48a7-46d7-8f9b-ffa9f1322df7
+
+localResources:
+  collections:
+    - ../collection.json
+  environments:
+    - ../environment.json
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/School Sphere API: a3af730f-8762-406b-a575-84d94cebd34b
