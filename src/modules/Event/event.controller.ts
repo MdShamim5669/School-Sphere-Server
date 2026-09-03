@@ -2,6 +2,8 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
 import pick from "../../utils/pick.js";
+import AppError from "../../errors/AppError.js";
+import { uploadToCloudinary, deleteImageFromCloudinary } from "../../lib/cloudinary.js";
 import { EventService } from "./event.service.js";
 import { eventFilterableFields } from "./event.constant.js";
 
@@ -39,6 +41,46 @@ const updateEvent = catchAsync(async (req, res) => {
   });
 });
 
+const uploadEventImage = catchAsync(async (req, res) => {
+  if (!req.file) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Image file is required");
+  }
+
+  // Upload to Cloudinary dedicated events folder
+  const uploadRes = await uploadToCloudinary(
+    req.file.buffer,
+    req.file.mimetype,
+    "school-sphere/events"
+  );
+
+  try {
+    const result = await EventService.updateEventImage(
+      req.params.id,
+      uploadRes.secure_url
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Event image uploaded successfully!",
+      data: result,
+    });
+  } catch (error) {
+    await deleteImageFromCloudinary(uploadRes.public_id);
+    throw error;
+  }
+});
+
+const removeEventImage = catchAsync(async (req, res) => {
+  const result = await EventService.removeEventImage(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Event image removed successfully!",
+    data: result,
+  });
+});
+
 const deleteEvent = catchAsync(async (req, res) => {
   const result = await EventService.deleteEvent(req.params.id);
   sendResponse(res, {
@@ -53,5 +95,7 @@ export const EventController = {
   createEvent,
   getAllEvents,
   updateEvent,
+  uploadEventImage,
+  removeEventImage,
   deleteEvent,
 };

@@ -10,8 +10,11 @@ export type ICreateParentInput = {
   email?: string;
   phone: string;
   address: string;
+  studentIds?: string[];
 };
 
 export type IUpdateParentInput = Partial<
   Omit<ICreateParentInput, "username" | "password">
->;
+> & {
+  studentIds?: string[];
+};

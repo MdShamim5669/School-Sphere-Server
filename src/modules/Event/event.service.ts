@@ -4,6 +4,7 @@ import AppError from "../../errors/AppError.js";
 import prisma from "../../lib/prisma.js";
 import { IPaginationOptions } from "../../interface/error.js";
 import { QueryBuilder } from "../../builder/QueryBuilder.js";
+import { deleteImageFromCloudinary } from "../../lib/cloudinary.js";
 import { ICreateEventInput, IEventFilterRequest, IUpdateEventInput } from "./event.interface.js";
 import { eventSearchableFields } from "./event.constant.js";
 
@@ -101,6 +102,52 @@ const updateEvent = async (id: string, payload: IUpdateEventInput) => {
   });
 };
 
+const updateEventImage = async (id: string, imageUrl: string) => {
+  const event = await prisma.event.findUnique({ where: { id } });
+  if (!event) {
+    throw new AppError(httpStatus.NOT_FOUND, "Event not found");
+  }
+
+  const oldImageUrl = event.img;
+
+  const updatedEvent = await prisma.event.update({
+    where: { id },
+    data: { img: imageUrl },
+    include: {
+      class: true,
+    },
+  });
+
+  if (oldImageUrl) {
+    await deleteImageFromCloudinary(oldImageUrl);
+  }
+
+  return updatedEvent;
+};
+
+const removeEventImage = async (id: string) => {
+  const event = await prisma.event.findUnique({ where: { id } });
+  if (!event) {
+    throw new AppError(httpStatus.NOT_FOUND, "Event not found");
+  }
+
+  const oldImageUrl = event.img;
+
+  const updatedEvent = await prisma.event.update({
+    where: { id },
+    data: { img: null },
+    include: {
+      class: true,
+    },
+  });
+
+  if (oldImageUrl) {
+    await deleteImageFromCloudinary(oldImageUrl);
+  }
+
+  return updatedEvent;
+};
+
 const deleteEvent = async (id: string) => {
   return await prisma.$transaction(async (tx) => {
     const isExist = await tx.event.findUnique({ where: { id } });
@@ -109,6 +156,11 @@ const deleteEvent = async (id: string) => {
     }
 
     const result = await tx.event.delete({ where: { id } });
+
+    if (isExist.img) {
+      await deleteImageFromCloudinary(isExist.img);
+    }
+
     return result;
   });
 };
@@ -117,5 +169,7 @@ export const EventService = {
   createEvent,
   getAllEvents,
   updateEvent,
+  updateEventImage,
+  removeEventImage,
   deleteEvent,
 };

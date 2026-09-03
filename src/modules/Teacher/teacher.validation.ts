@@ -6,8 +6,8 @@ const createTeacherZodSchema = z.object({
     password: z.string({ required_error: "Password is required" }).min(6),
     name: z.string({ required_error: "Name is required" }),
     surname: z.string({ required_error: "Surname is required" }),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
+    email: z.string().email().optional().or(z.literal("")),
+    phone: z.string().optional().or(z.literal("")),
     address: z.string({ required_error: "Address is required" }),
     bloodType: z.enum([
       "A_POSITIVE",
@@ -29,8 +29,8 @@ const updateTeacherZodSchema = z.object({
   body: z.object({
     name: z.string().optional(),
     surname: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
+    email: z.string().email().optional().or(z.literal("")),
+    phone: z.string().optional().or(z.literal("")),
     address: z.string().optional(),
     bloodType: z
       .enum([

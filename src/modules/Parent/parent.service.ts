@@ -10,20 +10,28 @@ import { ICreateParentInput, IParentFilterRequest, IUpdateParentInput } from "./
 import { parentSearchableFields } from "./parent.constant.js";
 
 const createParent = async (payload: ICreateParentInput) => {
+  const { studentIds, password, ...rest } = payload;
   const hashedPassword = await bcrypt.hash(
-    payload.password,
+    password,
     config.bcrypt_salt_round
   );
 
   return await prisma.$transaction(async (tx) => {
     const result = await tx.parent.create({
       data: {
-        ...payload,
+        ...rest,
         password: hashedPassword,
       },
     });
 
-    const { password, ...safeParent } = result;
+    if (studentIds && studentIds.length > 0) {
+      await tx.student.updateMany({
+        where: { id: { in: studentIds } },
+        data: { parentId: result.id },
+      });
+    }
+
+    const { password: _, ...safeParent } = result;
     return safeParent;
   });
 };
@@ -54,7 +62,14 @@ const getAllParents = async (
         address: true,
         createdAt: true,
         updatedAt: true,
-        students: true,
+        students: {
+          select: {
+            id: true,
+            name: true,
+            surname: true,
+            class: { select: { name: true } },
+          },
+        },
       },
     }),
     prisma.parent.count({ where: queryOptions.where }),
@@ -96,6 +111,8 @@ const getParentById = async (id: string) => {
 };
 
 const updateParent = async (id: string, payload: IUpdateParentInput) => {
+  const { studentIds, ...updateData } = payload;
+
   return await prisma.$transaction(async (tx) => {
     const isParentExist = await tx.parent.findUnique({ where: { id } });
     if (!isParentExist) {
@@ -104,7 +121,7 @@ const updateParent = async (id: string, payload: IUpdateParentInput) => {
 
     const result = await tx.parent.update({
       where: { id },
-      data: payload,
+      data: updateData,
       select: {
         id: true,
         username: true,
@@ -115,8 +132,16 @@ const updateParent = async (id: string, payload: IUpdateParentInput) => {
         address: true,
         createdAt: true,
         updatedAt: true,
+        students: true,
       },
     });
+
+    if (studentIds && studentIds.length > 0) {
+      await tx.student.updateMany({
+        where: { id: { in: studentIds } },
+        data: { parentId: id },
+      });
+    }
 
     return result;
   });

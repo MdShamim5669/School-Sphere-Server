@@ -3,6 +3,7 @@ export type ICreateEventInput = {
   description: string;
   startTime: string;
   endTime: string;
+  img?: string | null;
   classId?: string;
 };
 
@@ -13,4 +14,3 @@ export type IEventFilterRequest = {
   title?: string;
   classId?: string;
 };
-
