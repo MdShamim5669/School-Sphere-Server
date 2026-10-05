@@ -46,8 +46,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check Endpoint
-app.get("/", (_req: Request, res: Response) => {
+// Health Check Endpoints
+app.get(["/", "/api/v1"], (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: "School Sphere Backend API is running successfully!",
