@@ -26,4 +26,10 @@ router.patch(
   AttendanceController.updateAttendance
 );
 
+router.delete(
+  "/:id",
+  auth("ADMIN", "TEACHER"),
+  AttendanceController.deleteAttendance
+);
+
 export const AttendanceRoutes = router;

@@ -168,8 +168,32 @@ const updateAttendance = async (
   });
 };
 
+const deleteAttendance = async (id: string, user: any) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    const attendance = await tx.attendance.findUnique({
+      where: { id },
+      include: { lesson: true },
+    });
+
+    if (!attendance) {
+      throw new AppError(httpStatus.NOT_FOUND, "Attendance record not found");
+    }
+
+    if (user.role === "TEACHER" && attendance.lesson.teacherId !== user.id) {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        "You can only delete attendance for your assigned lessons"
+      );
+    }
+
+    const result = await tx.attendance.delete({ where: { id } });
+    return result;
+  });
+};
+
 export const AttendanceService = {
   markAttendance,
   getAttendanceRecords,
   updateAttendance,
+  deleteAttendance,
 };

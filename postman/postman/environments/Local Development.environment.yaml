@@ -30,3 +30,13 @@ values:
     value: ''
   - key: announcementId
     value: ''
+  - key: authToken
+    value: ''
+  - key: clientId
+    value: ''
+  - key: itemId
+    value: ''
+  - key: invoiceId
+    value: ''
+  - key: expenseId
+    value: ''

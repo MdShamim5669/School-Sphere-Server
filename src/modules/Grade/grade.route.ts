@@ -19,4 +19,22 @@ router.get(
   GradeController.getAllGrades
 );
 
+router.get(
+  "/:id",
+  auth("ADMIN", "TEACHER", "PARENT", "STUDENT"),
+  GradeController.getGradeById
+);
+
+router.patch(
+  "/:id",
+  auth("ADMIN"),
+  GradeController.updateGrade
+);
+
+router.delete(
+  "/:id",
+  auth("ADMIN"),
+  GradeController.deleteGrade
+);
+
 export const GradeRoutes = router;

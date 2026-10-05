@@ -43,8 +43,22 @@ const updateAttendance = catchAsync(async (req, res) => {
   });
 });
 
+const deleteAttendance = catchAsync(async (req, res) => {
+  const result = await AttendanceService.deleteAttendance(
+    req.params.id,
+    req.user
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Attendance deleted successfully!",
+    data: result,
+  });
+});
+
 export const AttendanceController = {
   markAttendance,
   getAttendanceRecords,
   updateAttendance,
+  deleteAttendance,
 };

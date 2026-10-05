@@ -103,19 +103,25 @@ const updateEvent = async (id: string, payload: IUpdateEventInput) => {
 };
 
 const updateEventImage = async (id: string, imageUrl: string) => {
-  const event = await prisma.event.findUnique({ where: { id } });
-  if (!event) {
-    throw new AppError(httpStatus.NOT_FOUND, "Event not found");
-  }
+  let oldImageUrl: string | null = null;
 
-  const oldImageUrl = event.img;
+  const updatedEvent = await prisma.$transaction(async (tx) => {
+    const event = await tx.event.findUnique({ where: { id } });
+    if (!event) {
+      throw new AppError(httpStatus.NOT_FOUND, "Event not found");
+    }
 
-  const updatedEvent = await prisma.event.update({
-    where: { id },
-    data: { img: imageUrl },
-    include: {
-      class: true,
-    },
+    oldImageUrl = event.img;
+
+    const updated = await tx.event.update({
+      where: { id },
+      data: { img: imageUrl },
+      include: {
+        class: true,
+      },
+    });
+
+    return updated;
   });
 
   if (oldImageUrl) {
@@ -126,19 +132,25 @@ const updateEventImage = async (id: string, imageUrl: string) => {
 };
 
 const removeEventImage = async (id: string) => {
-  const event = await prisma.event.findUnique({ where: { id } });
-  if (!event) {
-    throw new AppError(httpStatus.NOT_FOUND, "Event not found");
-  }
+  let oldImageUrl: string | null = null;
 
-  const oldImageUrl = event.img;
+  const updatedEvent = await prisma.$transaction(async (tx) => {
+    const event = await tx.event.findUnique({ where: { id } });
+    if (!event) {
+      throw new AppError(httpStatus.NOT_FOUND, "Event not found");
+    }
 
-  const updatedEvent = await prisma.event.update({
-    where: { id },
-    data: { img: null },
-    include: {
-      class: true,
-    },
+    oldImageUrl = event.img;
+
+    const updated = await tx.event.update({
+      where: { id },
+      data: { img: null },
+      include: {
+        class: true,
+      },
+    });
+
+    return updated;
   });
 
   if (oldImageUrl) {

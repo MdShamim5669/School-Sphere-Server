@@ -13,3 +13,5 @@ localResources:
 cloudResources:
   collections:
     ../postman/collections/School Sphere API: a3af730f-8762-406b-a575-84d94cebd34b
+    ../postman/collections/InvoiceFlow API - Complete Test Suite: 4a8a07fc-fa73-4f33-a1f5-0b8900aff592
+    ../postman/collections/🌱 EcoSpark Hub API: cd73bfc9-d021-49d5-8a7b-862f374488af
