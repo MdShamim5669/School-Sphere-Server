@@ -13,7 +13,7 @@ router.post(
   ParentController.createParent
 );
 
-router.get("/", auth("ADMIN"), ParentController.getAllParents);
+router.get("/", auth("ADMIN", "TEACHER", "PARENT"), ParentController.getAllParents);
 
 router.get(
   "/:id",

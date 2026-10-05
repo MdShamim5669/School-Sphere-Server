@@ -14,7 +14,7 @@ router.post(
   StudentController.createStudent
 );
 
-router.get("/", auth("ADMIN", "TEACHER"), StudentController.getAllStudents);
+router.get("/", auth("ADMIN", "TEACHER", "PARENT", "STUDENT"), StudentController.getAllStudents);
 
 router.get(
   "/:id",

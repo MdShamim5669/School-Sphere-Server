@@ -65,9 +65,14 @@ const getAllParents = async (
         students: {
           select: {
             id: true,
+            username: true,
             name: true,
             surname: true,
-            class: { select: { name: true } },
+            bloodType: true,
+            birthday: true,
+            sex: true,
+            class: { select: { id: true, name: true } },
+            grade: { select: { id: true, level: true } },
           },
         },
       },

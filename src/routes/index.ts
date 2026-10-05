@@ -71,6 +71,10 @@ const moduleRoutes = [
     route: AttendanceRoutes,
   },
   {
+    path: "/attendance",
+    route: AttendanceRoutes,
+  },
+  {
     path: "/events",
     route: EventRoutes,
   },
